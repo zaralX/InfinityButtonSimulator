@@ -1,0 +1,15 @@
+name: InfinityButtonSimulator
+version: '${project.version}'
+main: ru.zaralx.InfinityButtonSimulator
+api-version: 1.16
+prefix: IBS
+authors: [ zaralX ]
+description: The infinity button simulator
+website: https://zaralx.ru
+commands:
+  InfinityButtonSimulator:
+    description: "Admin Command"
+    usage: /InfinityButtonSimulator
+    aliases: [ InfinityButtonSimulator, ibs, IBS, Ibs ]
+    permission: op
+    permission-message: You do not have permission
