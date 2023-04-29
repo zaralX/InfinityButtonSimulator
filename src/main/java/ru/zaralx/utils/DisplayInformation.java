@@ -30,7 +30,9 @@ public class DisplayInformation {
         StringBuilder message = new StringBuilder();
         TempData player_data = InfinityButtonSimulator.getInstance().getPlayerData(player);
 
-        message.append(coloredText.colorize("%>#FF3333#<%"+new intFormatter(player_data.getBalance()).string+" Рубинов §f| %>#44FF44#<%Множитель x"+ new intFormatter(player_data.getDouble("Gaining")).string));
+        message.append(coloredText.colorize("%>#FF3333#<%"+new intFormatter(player_data.getBalance()).string+" Рубинов"));
+        message.append(coloredText.colorize(" §f| %>#44FF44#<%Множитель x"+ new intFormatter(player_data.getDouble("Gaining")).string));
+        message.append(coloredText.colorize(" §f| %>#3333FF#<%"+new intFormatter(player_data.getDouble("Rebirths")).string+" Ребитхов"));
 
         player.sendActionBar(message.toString());
     }

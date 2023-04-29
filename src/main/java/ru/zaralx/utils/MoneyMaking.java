@@ -19,7 +19,7 @@ public class MoneyMaking {
 
                 for (Player player : players) {
                     TempData player_data = InfinityButtonSimulator.getInstance().getPlayerData(player);
-                    Double give = player_data.getDouble("Gaining")/5;
+                    Double give = player_data.getDouble("Gaining")*player_data.getDouble("Rebirths")/5;
                     player_data.set("Balance", player_data.getBalance()+give);
                 }
             }

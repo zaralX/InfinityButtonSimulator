@@ -1,6 +1,5 @@
 package ru.zaralx.utils;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 import ru.zaralx.InfinityButtonSimulator;
@@ -11,12 +10,11 @@ import ru.zaralx.utils.zModules.intFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static org.bukkit.Bukkit.getServer;
 import static org.bukkit.Bukkit.getWorld;
 
-public class ButtonInfortmation {
+public class ButtonInformation {
     private static List<ArmorStand> stands = new ArrayList<>();
 
     public static void summon(String button) {
@@ -30,7 +28,7 @@ public class ButtonInfortmation {
         );
         ArmorStand title = getWorld((String) config.get().get("gameWorld")).spawn(location, ArmorStand.class);
         title.setCanMove(false);
-        title.setCustomName(coloredText.colorize("%>#ff2222#<%§lx"+new intFormatter((Double) buttonsConfig.get().get(button+".Multiply")).string));
+        title.setCustomName(coloredText.colorize("%>#22cc22#<%§lx"+new intFormatter((Double) buttonsConfig.get().get(button+".Multiply")).string));
         title.setCustomNameVisible(true);
         title.setInvisible(true);
         title.setMarker(true);
@@ -41,7 +39,7 @@ public class ButtonInfortmation {
 
         ArmorStand info = getWorld((String) config.get().get("gameWorld")).spawn(location, ArmorStand.class);
         info.setCanMove(false);
-        info.setCustomName(coloredText.colorize("%>#22cc22#<%"+new intFormatter((Double) buttonsConfig.get().get(button+".Price")).string+"$"));
+        info.setCustomName(coloredText.colorize("%>#ff2222#<%"+new intFormatter((Double) buttonsConfig.get().get(button+".Price")).string+"$"));
         info.setCustomNameVisible(true);
         info.setInvisible(true);
         info.setMarker(true);
@@ -50,15 +48,12 @@ public class ButtonInfortmation {
     }
 
     public static void removeall() {
-        for (int i = 0; i < 10; i++) {
-            for (ArmorStand armorStand : stands) {
-                getServer().getWorld((String) config.get().get("gameWorld")).getEntity(armorStand.getUniqueId()).remove();
-            }
+        for (ArmorStand armorStand : stands) {
+            armorStand.remove();
         }
     }
 
     public static void init() {
-        InfinityButtonSimulator.getInstance().removeLaggedStands();
         for (String key : buttonsConfig.get().getKeys(false)) {
             summon(key);
         }

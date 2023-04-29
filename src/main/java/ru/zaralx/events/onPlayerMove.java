@@ -8,7 +8,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import ru.zaralx.InfinityButtonSimulator;
 import ru.zaralx.utils.BuyButton;
+import ru.zaralx.utils.BuyRebirth;
 import ru.zaralx.utils.zModules.configs.buttonsConfig;
+import ru.zaralx.utils.zModules.configs.rebirthsConfig;
 
 public class onPlayerMove implements Listener {
     public onPlayerMove(InfinityButtonSimulator plugin) {
@@ -26,6 +28,14 @@ public class onPlayerMove implements Listener {
                         location.getBlockZ() == (int) buttonsConfig.get().get(button+".Z") )
                 {
                     BuyButton.buy(player, button);
+                }
+            }
+            for (String button : rebirthsConfig.get().getKeys(false)) {
+                if ( location.getBlockX() == (int) rebirthsConfig.get().get(button+".X") &&
+                        location.getBlockY() == (int) rebirthsConfig.get().get(button+".Y") &&
+                        location.getBlockZ() == (int) rebirthsConfig.get().get(button+".Z") )
+                {
+                    BuyRebirth.buy(player, button);
                 }
             }
         }

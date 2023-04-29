@@ -3,6 +3,7 @@ package ru.zaralx.utils.zModules.database;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 import ru.zaralx.InfinityButtonSimulator;
+import ru.zaralx.utils.zModules.TopRebirths;
 import ru.zaralx.utils.zModules.configs.config;
 import ru.zaralx.utils.zModules.configs.defaultPlayerStats;
 
@@ -15,6 +16,7 @@ public class Save {
             @Override
             public void run() {
                 saveOnlinePlayers();
+                TopRebirths.update();
             }
         }.runTaskTimer(InfinityButtonSimulator.getInstance(), 0L, (int) config.get().get("autoSave.time"));
     }

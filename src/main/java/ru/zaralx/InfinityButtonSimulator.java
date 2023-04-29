@@ -3,24 +3,21 @@ package ru.zaralx;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import ru.zaralx.commands.InfinityButtonSimulatorCommand;
 import ru.zaralx.events.onPlayerJoin;
 import ru.zaralx.events.onPlayerLeave;
 import ru.zaralx.events.onPlayerMove;
-import ru.zaralx.utils.ButtonInfortmation;
+import ru.zaralx.utils.ButtonInformation;
 import ru.zaralx.utils.DisplayInformation;
 import ru.zaralx.utils.MoneyMaking;
+import ru.zaralx.utils.RebirthButtonInformation;
 import ru.zaralx.utils.zModules.EntityHider;
-import ru.zaralx.utils.zModules.configs.buttonsConfig;
-import ru.zaralx.utils.zModules.configs.config;
-import ru.zaralx.utils.zModules.configs.defaultConfig;
-import ru.zaralx.utils.zModules.configs.defaultPlayerStats;
+import ru.zaralx.utils.zModules.TopRebirths;
+import ru.zaralx.utils.zModules.configs.*;
 import ru.zaralx.utils.zModules.database.Save;
 import ru.zaralx.utils.zModules.database.TempData;
 import ru.zaralx.utils.zModules.database.database;
-import ru.zaralx.utils.zModules.intFormatter;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -43,6 +40,9 @@ public final class InfinityButtonSimulator extends JavaPlugin {
         new defaultConfig().run();
         defaultPlayerStats.setup();
         buttonsConfig.setup();
+        rebirthsConfig.setup();
+
+        removeLaggedStands();
 
         // DataBase
         InitializeDataBase();
@@ -60,14 +60,24 @@ public final class InfinityButtonSimulator extends JavaPlugin {
         new Save().autoSave();
         new DisplayInformation().loop();
 
-        // Load Buttons Information
-        ButtonInfortmation.init();
+        // Load Information Stands
+        ButtonInformation.init();
+        RebirthButtonInformation.init();
         MoneyMaking.loop();
+        TopRebirths.setup();
+        TopRebirths.update();
+
+        // Load not kicked players (For development)
+        for (Player player : Bukkit.getWorld((String) config.get().get("gameWorld")).getPlayers()) {
+            onPlayerJoin.playerJoined(player);
+        }
     }
 
     @Override
     public void onDisable() {
-        ButtonInfortmation.removeall();
+        ButtonInformation.removeall();
+        RebirthButtonInformation.removeall();
+        TopRebirths.removeall();
         Save.saveOnlinePlayers();
         db.disconnect();
     }
